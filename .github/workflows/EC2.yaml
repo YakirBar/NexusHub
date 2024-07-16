@@ -1,0 +1,24 @@
+name: EC2 Pull and Run  # Workflow name
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+
+jobs:
+  build-and-push:
+    runs-on: self-hosted  # Use Self-hosted as the runner
+
+    steps:
+      - name: Login to Docker Hub  # Step to login to Docker Hub
+        run: |
+          sudo docker login \
+            -u ${{ secrets.DOCKERHUB_USERNAME }} \
+            -p ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Pull and run Docker image  # Step to pull and run Docker image
+        run: |
+          sudo docker run -d --name HelloWorld -p 9090:9090 yakirbartech/dockerhub:0.1
+
+      - name: Logout from Docker Hub  # Step to logout from Docker Hub
+        run: sudo docker logout
