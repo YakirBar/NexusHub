@@ -1,0 +1,34 @@
+name: DockerHub Build and Push  # Workflow name
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest  # Use Ubuntu latest as the runner
+
+    steps:
+      - name: Checkout code  # Step to checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx  # Step to set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Docker Hub  # Step to login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}  # Docker Hub username from secrets
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}  # Docker Hub password from secrets
+
+      - name: Build and push Docker image  # Step to build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./app  # Path to the Docker build context
+          push: true  # Push the built image to Docker Hub
+          tags: |
+            yakirbartech/dockerhub:0.1  # Docker image tag
+
+      - name: Logout from Docker Hub  # Step to logout from Docker Hub
+        run: docker logout
