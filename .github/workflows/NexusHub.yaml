@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: self-hosted # Use Self-hosted as the runner
+    runs-on: self-hosted # Use Self-hosted as the runner 
 
     steps:
       - name: Pull and tag Docker image # Step to pull and tag Docker image
