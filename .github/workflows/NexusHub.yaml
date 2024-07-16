@@ -12,8 +12,7 @@ jobs:
     steps:
       - name: Pull and tag Docker image # Step to pull and tag Docker image 
         run: |
-          sudo docker pull yakirbartech/dockerhub:0.1
-          sudo docker tag yakirbartech/dockerhub:0.1 75.101.216.72:9092/nexushub:0.1
+          sudo docker pull yakirbartech/dockerhub:0.1 && sudo docker tag yakirbartech/dockerhub:0.1 75.101.216.72:9092/nexushub:0.1
 
       - name: Login to Nexus Hub # Step to login to Nexus Hub
         run: |
